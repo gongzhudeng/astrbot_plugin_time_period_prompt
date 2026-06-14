@@ -1,0 +1,239 @@
+{
+  "enabled": {
+    "type": "bool",
+    "description": "启用插件",
+    "hint": "开启后，会根据工作制度、临时日期、当前日期时间和当前时间段注入陪伴状态提示。",
+    "default": true
+  },
+  "debug_enabled": {
+    "type": "bool",
+    "description": "调试日志",
+    "hint": "开启后，会在控制台日志里显示今日判断、命中的规则和最终注入内容。排查配置时很有用，平时可以关闭。",
+    "default": false
+  },
+  "work_mode": {
+    "type": "string",
+    "description": "工作制度模式",
+    "hint": "双休=周一到周五工作；单休=周一到周六工作；大小周=周六隔周工作；无休=每天工作；自定义=自己填写工作星期。",
+    "options": [
+      "双休",
+      "单休",
+      "大小周",
+      "无休",
+      "自定义"
+    ],
+    "default": "单休"
+  },
+  "today_override": {
+    "type": "string",
+    "description": "今日状态锁定",
+    "hint": "自动判断=按工作制度和临时日期判断；强制工作日/强制休息日只临时覆盖今天，不影响大小周轮换。",
+    "options": [
+      "自动判断",
+      "强制工作日",
+      "强制休息日"
+    ],
+    "default": "自动判断"
+  },
+  "custom_work_days": {
+    "type": "string",
+    "description": "自定义工作星期",
+    "hint": "仅工作制度模式选择“自定义”时生效。1=周一，7=周日。示例：1-5、1-6、1,3,5、*。",
+    "default": "1-5"
+  },
+  "big_week_base_saturday": {
+    "type": "string",
+    "description": "大小周基准周六日期",
+    "hint": "仅大小周模式生效。填写一个你确定的大周或小周的周六日期，格式：2026-06-13。",
+    "default": ""
+  },
+  "big_week_base_type": {
+    "type": "string",
+    "description": "基准周六类型",
+    "hint": "选择你上面填写的那个基准周六是上班还是休息。",
+    "options": [
+      "基准周六上班",
+      "基准周六休息"
+    ],
+    "default": "基准周六上班"
+  },
+  "temp_rest_dates": {
+    "type": "list",
+    "description": "临时休息日",
+    "hint": "节假日、请假、临时休息写这里。格式：2026-06-10。优先级高于工作制度。",
+    "default": []
+  },
+  "temp_work_dates": {
+    "type": "list",
+    "description": "临时工作日",
+    "hint": "调休、加班、临时上班写这里。格式：2026-06-14。优先级高于工作制度。",
+    "default": []
+  },
+  "work_day_status_prompt": {
+    "type": "text",
+    "description": "工作日状态提示",
+    "hint": "今天是工作日时可注入。清空则不注入。",
+    "default": "今天是工作日，用户可能处在工作节奏里，关心时要有分寸，不要频繁打扰。"
+  },
+  "rest_day_status_prompt": {
+    "type": "text",
+    "description": "休息日状态提示",
+    "hint": "今天是休息日时可注入。清空则不注入。",
+    "default": "今天是休息日，用户节奏更放松，可以更自然轻松地陪伴和聊天。"
+  },
+  "datetime_prompt_mode": {
+    "type": "string",
+    "description": "日期时间提示模式",
+    "hint": "现在不再主打缓存时，可以选择日期和时间。仅时间/日期和时间会精确到分钟。",
+    "options": [
+      "关闭",
+      "年月日",
+      "年月",
+      "月初中下旬",
+      "仅时间",
+      "日期和时间"
+    ],
+    "default": "年月日"
+  },
+  "transition_enabled": {
+    "type": "bool",
+    "description": "启用时段交接模糊区间",
+    "hint": "开启后，在刚进入一个时段或这个时段快结束时，会额外注入交接提示。",
+    "default": true
+  },
+  "transition_minutes": {
+    "type": "int",
+    "description": "交接模糊区间分钟数",
+    "hint": "例如填 10，表示刚进入时段的前 10 分钟、快结束时段的最后 10 分钟会触发交接提示。",
+    "slider": {
+      "min": 0,
+      "max": 60,
+      "step": 1
+    },
+    "default": 10
+  },
+  "extra_prompt_enabled": {
+    "type": "bool",
+    "description": "启用今日附加提示",
+    "hint": "适合今天居家办公、临时外出、请假、临时加班等特殊情况。",
+    "default": false
+  },
+  "extra_prompt": {
+    "type": "text",
+    "description": "今日附加提示内容",
+    "hint": "这里写今天的特殊情况。比如：今天用户居家办公，节奏比平时更自由，但仍然属于工作日。清空则不注入。",
+    "default": ""
+  },
+  "extra_prompt_expire_date": {
+    "type": "string",
+    "description": "附加提示到期日期",
+    "hint": "可选。格式：2026-06-10。留空表示只要开关开启就一直生效；填写后，超过这一天就自动不生效。",
+    "default": ""
+  },
+  "inject_order": {
+    "type": "string",
+    "description": "注入顺序",
+    "hint": "用中文逗号分开。可用名称：状态提示、今日附加提示、日期时间提示、交接提示、时段提示词。默认：状态提示,今日附加提示,日期时间提示,交接提示,时段提示词",
+    "default": "状态提示,今日附加提示,日期时间提示,交接提示,时段提示词"
+  },
+  "work_time_rules": {
+    "type": "template_list",
+    "description": "工作日时间段规则",
+    "hint": "今天被判断为工作日时，只会匹配这里的规则。可以写得细一点，比如通勤、上午、午休、下午、下班后。",
+    "templates": {
+      "time_rule": {
+        "name": "工作日时间段",
+        "description": "工作日某个时间段的陪伴提示",
+        "items": {
+          "time_range": {
+            "type": "string",
+            "description": "时间段",
+            "hint": "格式示例：09:00-12:00。跨天示例：19:30-08:29。",
+            "default": "09:00-12:00"
+          },
+          "prompt": {
+            "type": "text",
+            "description": "时段提示词",
+            "hint": "这个时间段的主要提示词。建议直接写这个时段希望 AI 呈现的状态和语气。",
+            "default": "当前时段：工作日上午。"
+          },
+          "transition_prompt": {
+            "type": "text",
+            "description": "共用交接提示",
+            "hint": "刚进入这个时段、或这个时段快结束时都可使用。若下面两个专用提示为空，就使用这里。",
+            "default": ""
+          },
+          "enter_transition_prompt": {
+            "type": "text",
+            "description": "刚进入时段提示",
+            "hint": "例如：刚进入午休，可以从工作状态慢慢切到吃饭和休息。",
+            "default": ""
+          },
+          "leave_transition_prompt": {
+            "type": "text",
+            "description": "快结束时段提示",
+            "hint": "例如：午休快结束了，语气可以轻一点，不要突然拉长话题。",
+            "default": ""
+          }
+        }
+      }
+    },
+    "default": []
+  },
+  "rest_time_rules": {
+    "type": "template_list",
+    "description": "休息日时间段规则",
+    "hint": "今天被判断为休息日时，只会匹配这里的规则。可以写得少一点，比如上午、下午、晚上。",
+    "templates": {
+      "time_rule": {
+        "name": "休息日时间段",
+        "description": "休息日某个时间段的陪伴提示",
+        "items": {
+          "time_range": {
+            "type": "string",
+            "description": "时间段",
+            "hint": "格式示例：09:00-12:00。跨天示例：19:30-08:29。",
+            "default": "09:00-12:00"
+          },
+          "prompt": {
+            "type": "text",
+            "description": "时段提示词",
+            "hint": "这个时间段的主要提示词。建议直接写这个时段希望 AI 呈现的状态和语气。",
+            "default": "当前时段：休息日上午。"
+          },
+          "transition_prompt": {
+            "type": "text",
+            "description": "共用交接提示",
+            "hint": "刚进入这个时段、或这个时段快结束时都可使用。若下面两个专用提示为空，就使用这里。",
+            "default": ""
+          },
+          "enter_transition_prompt": {
+            "type": "text",
+            "description": "刚进入时段提示",
+            "hint": "例如：刚进入休息日上午，可以从起床状态慢慢切到轻松陪伴。",
+            "default": ""
+          },
+          "leave_transition_prompt": {
+            "type": "text",
+            "description": "快结束时段提示",
+            "hint": "例如：这个休息时段快结束了，语气自然收束，不要突然开启很长话题。",
+            "default": ""
+          }
+        }
+      }
+    },
+    "default": []
+  },
+  "work_default_prompt": {
+    "type": "text",
+    "description": "工作日默认提示词",
+    "hint": "工作日没有匹配到任何时间段时使用。可以留空。",
+    "default": ""
+  },
+  "rest_default_prompt": {
+    "type": "text",
+    "description": "休息日默认提示词",
+    "hint": "休息日没有匹配到任何时间段时使用。可以留空。",
+    "default": ""
+  }
+}
