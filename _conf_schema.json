@@ -72,13 +72,13 @@
   "work_day_status_prompt": {
     "type": "text",
     "description": "工作日状态提示",
-    "hint": "今天是工作日时可注入。清空则不注入。",
+    "hint": "今天是工作日时可注入。清空则不注入。支持占位符: {today_schedule}（需安装忙碌日程插件）",
     "default": "今天是工作日，用户可能处在工作节奏里，关心时要有分寸，不要频繁打扰。"
   },
   "rest_day_status_prompt": {
     "type": "text",
     "description": "休息日状态提示",
-    "hint": "今天是休息日时可注入。清空则不注入。",
+    "hint": "今天是休息日时可注入。清空则不注入。支持占位符: {today_schedule}（需安装忙碌日程插件）",
     "default": "今天是休息日，用户节奏更放松，可以更自然轻松地陪伴和聊天。"
   },
   "datetime_prompt_mode": {
@@ -121,7 +121,7 @@
   "extra_prompt": {
     "type": "text",
     "description": "今日附加提示内容",
-    "hint": "这里写今天的特殊情况。比如：今天用户居家办公，节奏比平时更自由，但仍然属于工作日。清空则不注入。",
+    "hint": "这里写今天的特殊情况。比如：今天用户居家办公，节奏比平时更自由，但仍然属于工作日。清空则不注入。支持占位符: {today_schedule}（需安装忙碌日程插件）",
     "default": ""
   },
   "extra_prompt_expire_date": {
@@ -154,7 +154,7 @@
           "prompt": {
             "type": "text",
             "description": "时段提示词",
-            "hint": "这个时间段的主要提示词。建议直接写这个时段希望 AI 呈现的状态和语气。",
+            "hint": "这个时间段的主要提示词。建议直接写这个时段希望 AI 呈现的状态和语气。支持占位符: {today_schedule}（需安装忙碌日程插件）",
             "default": "当前时段：工作日上午。"
           },
           "transition_prompt": {
@@ -198,7 +198,7 @@
           "prompt": {
             "type": "text",
             "description": "时段提示词",
-            "hint": "这个时间段的主要提示词。建议直接写这个时段希望 AI 呈现的状态和语气。",
+            "hint": "这个时间段的主要提示词。建议直接写这个时段希望 AI 呈现的状态和语气。支持占位符: {today_schedule}（需安装忙碌日程插件）",
             "default": "当前时段：休息日上午。"
           },
           "transition_prompt": {
@@ -227,13 +227,13 @@
   "work_default_prompt": {
     "type": "text",
     "description": "工作日默认提示词",
-    "hint": "工作日没有匹配到任何时间段时使用。可以留空。",
+    "hint": "工作日没有匹配到任何时间段时使用。可以留空。支持占位符: {today_schedule}（需安装忙碌日程插件）",
     "default": ""
   },
   "rest_default_prompt": {
     "type": "text",
     "description": "休息日默认提示词",
-    "hint": "休息日没有匹配到任何时间段时使用。可以留空。",
+    "hint": "休息日没有匹配到任何时间段时使用。可以留空。支持占位符: {today_schedule}（需安装忙碌日程插件）",
     "default": ""
   }
 }
