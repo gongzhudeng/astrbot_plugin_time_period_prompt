@@ -11,13 +11,14 @@ from astrbot.core.provider.entities import ProviderRequest
     "灵犀 · 陪伴节律助手",
     "灵犀",
     "让 AI 根据工作、休息、日期时间和生活节律调整陪伴方式",
-    "2.9.0",
+    "2.9.1",
     "https://github.com/gongzhudeng/astrbot_plugin_time_period_prompt",
 )
 class CompanionRhythmPlugin(Star):
     def __init__(self, context: Context, config: AstrBotConfig):
         super().__init__(context)
         self.config = config
+        self.context._time_period_current_prompt = ""
 
     def debug_log(self, message: str):
         if self.config.get("debug_enabled", False):
@@ -420,11 +421,14 @@ class CompanionRhythmPlugin(Star):
 
             if not current_prompt:
                 self.debug_log("未匹配到提示词，本次不注入。")
+                self.context._time_period_current_prompt = ""
                 return
 
             today_schedule = getattr(self.context, "_busy_schedule_today_schedule", "")
             if today_schedule:
                 current_prompt = current_prompt.replace("{today_schedule}", today_schedule)
+
+            self.context._time_period_current_prompt = current_prompt
 
             inject_text = f"[节律：{current_prompt}]"
             old_prompt = (req.prompt or "").strip()
