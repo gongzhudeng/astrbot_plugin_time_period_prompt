@@ -11,7 +11,7 @@ from astrbot.core.provider.entities import ProviderRequest
     "灵犀 · 陪伴节律助手",
     "灵犀",
     "让 AI 根据工作、休息、日期时间和生活节律调整陪伴方式",
-    "2.9.1",
+    "2.9.2",
     "https://github.com/gongzhudeng/astrbot_plugin_time_period_prompt",
 )
 class CompanionRhythmPlugin(Star):
@@ -19,6 +19,7 @@ class CompanionRhythmPlugin(Star):
         super().__init__(context)
         self.config = config
         self.context._time_period_current_prompt = ""
+        self.context._time_period_get_prompt = self.get_current_prompt
 
     def debug_log(self, message: str):
         if self.config.get("debug_enabled", False):
